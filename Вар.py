@@ -22,10 +22,10 @@ from typing import Callable, Awaitable, Any, Dict
 
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", filename="Ло.txt", filemode="w")
 
-t = Bot('6585400874:AAF7WSV1B8jJvJHvRY0tPTceDE24mvyuOLU')
+t = Bot('')
 dp = Dispatcher(storage = MemoryStorage())
 iam_token = "t1.9euelZqXkZuMisePnIyTkMyRyIqXze3rnpWakYmMzIzLnZaSk4uZjsqZzszl8_doFUNO-e9ZNkgE_d3z9yhEQE7571k2SAT9zef1656VmsuXzZPHjs2blYmRnMyOx4ud7_zF656VmsuXzZPHjs2blYmRnMyOx4udveuelZqcy8-Mm5SRmY3Ll5jHl8zPy7XehpzRnJCSj4qLmtGLmdKckJKPioua0pKai56bnoue0oye.sOGqW0wvn7EyCc2DUOU9BmUT8K_oZJv3qkG8fzPvqnhkuQ5j4ZKZqXrG_kpnOLWLGNqre7wXLGg0O4s1Tt6QDA"
-folder_id = 'b1ghl4q6lijhc0ii8hdf'
+folder_id = ''
 
 class N(StatesGroup):
     n = State()
