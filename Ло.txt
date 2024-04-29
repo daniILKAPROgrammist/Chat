@@ -1,0 +1,17 @@
+2024-04-29 13:26:51,881 - root - INFO - Бот запущен
+2024-04-29 13:26:51,882 - asyncio - DEBUG - Using selector: EpollSelector
+2024-04-29 13:26:52,179 - tzlocal - DEBUG - /etc/timezone found, contents:
+ Asia/Yekaterinburg
+
+2024-04-29 13:26:52,180 - tzlocal - DEBUG - /etc/localtime found
+2024-04-29 13:26:52,183 - tzlocal - DEBUG - 2 found:
+ {'/etc/timezone': 'Asia/Yekaterinburg', '/etc/localtime is a symlink to': 'Asia/Yekaterinburg'}
+2024-04-29 13:26:52,185 - apscheduler.scheduler - INFO - Scheduler started
+2024-04-29 13:26:52,186 - aiogram.dispatcher - INFO - Start polling
+2024-04-29 13:26:52,187 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2024-04-29 13:26:52,187 - apscheduler.scheduler - DEBUG - No jobs; waiting until a job is added
+2024-04-29 13:26:52,269 - aiogram.dispatcher - INFO - Run polling for bot @Dermishche_bot id=6585400874 - 'Нейро'
+2024-04-29 13:26:54,189 - aiogram.utils.chat_action - DEBUG - Started chat action 'typing' sender in chat_id=5738805521 via bot id=6585400874
+2024-04-29 13:26:54,190 - aiogram.utils.chat_action - DEBUG - Sent chat action 'typing' to chat_id=5738805521 via bot 6585400874 (already sent actions 0)
+2024-04-29 13:26:54,739 - aiogram.utils.chat_action - DEBUG - Finished chat action 'typing' sender in chat_id=5738805521 via bot id=6585400874
+2024-04-29 13:26:54,739 - aiogram.event - INFO - Update id=101427606 is handled. Duration 552 ms by bot id=6585400874
