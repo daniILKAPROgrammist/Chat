@@ -1,17 +1,13 @@
-2024-05-01 13:01:17,239 - asyncio - DEBUG - Using selector: EpollSelector
-2024-05-01 13:01:17,582 - tzlocal - DEBUG - /etc/timezone found, contents:
+2024-05-01 13:58:48,912 - asyncio - DEBUG - Using selector: EpollSelector
+2024-05-01 13:58:49,224 - tzlocal - DEBUG - /etc/timezone found, contents:
  Asia/Yekaterinburg
 
-2024-05-01 13:01:17,584 - tzlocal - DEBUG - /etc/localtime found
-2024-05-01 13:01:17,588 - tzlocal - DEBUG - 2 found:
+2024-05-01 13:58:49,225 - tzlocal - DEBUG - /etc/localtime found
+2024-05-01 13:58:49,237 - tzlocal - DEBUG - 2 found:
  {'/etc/timezone': 'Asia/Yekaterinburg', '/etc/localtime is a symlink to': 'Asia/Yekaterinburg'}
-2024-05-01 13:01:17,591 - apscheduler.scheduler - INFO - Scheduler started
-2024-05-01 13:01:17,593 - aiogram.dispatcher - INFO - Start polling
-2024-05-01 13:01:17,593 - apscheduler.scheduler - DEBUG - Looking for jobs to run
-2024-05-01 13:01:17,594 - apscheduler.scheduler - DEBUG - No jobs; waiting until a job is added
-2024-05-01 13:01:17,693 - aiogram.dispatcher - INFO - Run polling for bot @Dermishche_bot id=6585400874 - 'Нейро'
-2024-05-01 13:01:34,460 - aiogram.event - INFO - Update id=101427668 is handled. Duration 368 ms by bot id=6585400874
-2024-05-01 13:01:36,627 - aiogram.event - INFO - Update id=101427669 is handled. Duration 127 ms by bot id=6585400874
-2024-05-01 13:01:58,194 - aiogram.dispatcher - WARNING - Received SIGINT signal
-2024-05-01 13:01:58,195 - aiogram.dispatcher - INFO - Polling stopped for bot @Dermishche_bot id=6585400874 - 'Нейро'
-2024-05-01 13:01:58,195 - aiogram.dispatcher - INFO - Polling stopped
+2024-05-01 13:58:49,240 - apscheduler.scheduler - INFO - Scheduler started
+2024-05-01 13:58:49,241 - aiogram.dispatcher - INFO - Start polling
+2024-05-01 13:58:49,242 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2024-05-01 13:58:49,242 - apscheduler.scheduler - DEBUG - No jobs; waiting until a job is added
+2024-05-01 13:58:49,337 - aiogram.dispatcher - INFO - Run polling for bot @Dermishche_bot id=6585400874 - 'Нейро'
+2024-05-01 13:59:06,217 - aiogram.event - INFO - Update id=101427673 is handled. Duration 366 ms by bot id=6585400874

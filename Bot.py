@@ -13,7 +13,6 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.utils.chat_action import ChatActionSender
 import requests
 from sqlite3 import connect
-from math import ceil
 from json import load, dump
 from random import choice
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -65,28 +64,6 @@ async def main():
     dp.update.middleware(SchedulerMiddleware(apscheduler=scheduler),)
     await dp.start_polling(t)
 
-# def count_tokens(g):
-#     # Подсчитывает количество токенов в тексте
-#     headers = { # заголовок запроса, в котором передаем IAM-токен
-#         'Authorization': f'Bearer {iam_token}', # token - наш IAM-токен
-#         'Content-Type': 'application/json'
-#     }
-#     data = {
-#        "modelUri": f"gpt://b1ghl4q6lijhc0ii8hdf/yandexgpt/latest", # указываем folder_id
-#        "maxTokens": 100,
-#        "text": g # text - тот текст, в котором мы хотим посчитать токены
-#     }
-#     r = requests.post(
-#             "https://llm.api.cloud.yandex.net/foundationModels/v1/tokenize",
-#             json=data,
-#             headers=headers
-#         ).json()
-
-#     if "tokens" in r: 
-#         return len(r["tokens"])
-#     else:
-#         logging.debug("Ключ просрочен")
-#         raise Exception
     
 class Right(BaseFilter):
     async def __call__(self, message): 
@@ -240,220 +217,16 @@ async def i(message:Message,state=FSMContext):
         await state.set_state(N.n1)
         await message.answer("Вводи")
 
-# def f1(id, *ar):
-#     ser = connect("Гавно.db")
-#     s = ser.cursor()        
-#     n = []
-#     k = "UPDATE us SET "
-#     for i in ar:
-#         if i == ar[-1]:
-#             k += i[0] + " = ?"
-#         else:
-#             k += i[0] + " = ?, "
-#         n.append(i[1])
-#     list(n)
-#     s.execute(k + f" WHERE user_id = {id};", n)
-#     ser.commit()
-#     ser.close()
-
-# def f2(id, *ar):
-#     ser = connect("Гавно.db")
-#     s = ser.cursor()
-#     k = "SELECT "
-#     for i in ar:
-#         if i == ar[-1]:
-#             k += i
-#         else:
-#             k += i + ", "
-#     h = s.execute(k + f" FROM us WHERE user_id IS NOT NULL AND user_id = {id};").fetchall()
-#     ser.commit()
-#     ser.close()
-#     return h[0]
-  
-# def tts(id, text):
-#     g = f2(id,"tokens_tts", "Отлад")
-#     if g[0] > 1000:
-#         return (3, True)
-    
-#     headers = {
-#         'Authorization': f'Bearer {iam_token}',
-#     }
-#     data = {
-#         'text': text,  # текст, который нужно преобразовать в голосовое сообщение
-#         'lang': 'ru-RU',  # язык текста - русский
-#         'voice': 'filipp',  # голос Филлипа
-#         'folderId': folder_id,
-#     }
-#     # Выполняем запрос
-#     response = requests.post('https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize', headers=headers, data=data)
-    
-    
-#     if response.status_code == 200:
-#         # Если все хорошо, сохраняем аудио в файл
-#         with open("output.ogg", "+wb") as audio_file:
-#             audio_file.write(response.content)               
-#             f1(id, ("tokens_tts", g[0] + len(text)))
-#             return (2, True)
-#     else:
-#         if g[1]:
-#             return (4, response.json)
-#         else:
-#             return (5, True)
-    
-# async def tts1(message:Message, text):
-#     t = tts(message.from_user.id, text)
-#     if t[0] == 2:
-#         async with ChatActionSender(bot=t,chat_id=message.chat.id):
-#             await message.answer_audio(FSInputFile("output.ogg", "ГыГ"), caption = "ГыГ")
-#     if t[0] == 3:
-#         await message.answer("Нету символов")
-#     if t[0] == 4:
-#         await message.answer(str(t))
-#     if t[0] == 5:
-#         await message.answer("Ошибка")
         
 @rout.message(N.n2, F.text)
 async def tts2(message:Message,state=FSMContext):
     await tts1(message, message.text)
         
-# async def sst(id, voice):
-#     g = f2(id,"tokens_sst", "Отлад")
-    
-#     if g[0] > 10:
-#         return (3, True)
-    
-#     await t.download(voice, "ov.ogg")
-    
-#     # iam_token, folder_id для доступа к Yandex SpeechKit
-
-#     # Указываем параметры запроса
-#     params = "&".join([
-#         "topic=general",  # используем основную версию модели
-#         f"folderId={folder_id}",
-#         "lang=ru-RU"  # распознаём голосовое сообщение на русском языке
-#     ])
-
-#     # Аутентификация через IAM-токен
-#     headers = {
-#         'Authorization': f'Bearer {iam_token}',
-#     }
-        
-#         # Выполняем запрос
-#     response = requests.post(
-#             f"https://stt.api.cloud.yandex.net/speech/v1/stt:recognize?{params}",
-#         headers=headers, 
-#         data=open("ov.ogg", "rb")
-#     )
-    
-#     # Читаем json в словарь
-#     decoded_data = response.json()
-#     # Проверяем, не произошла ли ошибка при запросе
-#     if decoded_data.get("error_code") is None:
-#         f1(id,("tokens_sst", (g[0] + ceil(voice.duration / 15))))
-#         return (2, decoded_data)
-#     else:
-#         if g[1]:
-#             return (4, decoded_data)
-#         else:
-#             return (5, True)
-    
-# async def sst1(message):
-#     s = await sst(message.from_user.id, message.voice)
-#     if s[0] == 2:
-#         async with ChatActionSender(bot=t,chat_id=message.chat.id):
-#             if s[1]["result"] == "":
-#                 await message.answer("Ничо не слышно")
-#             else:
-#                 await message.answer(s[1]["result"])
-#             return s[1]["result"]
-#     if s[0] == 3:
-#         await message.answer("Нету блоков")
-#     if s[0] == 4:
-#         await message.answer(str(tts))
-#     if s[0] == 5:
-#         await message.answer("Ошибка")
         
 @rout.message(N.n3, F.voice)
 async def sst2(message:Message,state=FSMContext):
     await sst1(message)
          
-# def gpt(id, text):
-#     g = list(f2(id,"user","assis","tokens_gpt", "Отлад"))
-    
-#     if g[2] > 1000:               
-#         return (3, True)
-    
-#     data = {
-#         "modelUri": f"gpt://b1ghl4q6lijhc0ii8hdf/yandexgpt-lite",
-#         "completionOptions": {
-#             "stream": False,
-#             "temperature": 0.6,
-#             "maxTokens": 30
-#         },
-#         "messages": [{"role":"system", "text":"Ответь"}]
-#     }
-    
-#     g[0] += text.replace("[]", " ") + "[]"
-    
-#     b = list(zip(g[0].split("[]"), g[1].split("[]")))
-#     for r in b:        
-#         if r[0] != "":
-#             data["messages"].append(
-#                 {
-#                     "role": "user",
-#                     "text": r[0]
-#                 }
-#             ) 
-#         if r[1] != "":
-#             data["messages"].append(
-#                 {
-#                     "role": "assistant",
-#                     "text": r[1]
-#                 }
-#             )
-    
-#     logging.info("Генерация")
-
-#     resp = requests.post("https://llm.api.cloud.yandex.net/foundationModels/v1/completion", 
-#                 headers= {
-#         'Authorization': f'Bearer {iam_token}',
-#         'Content-Type': 'application/json'
-#     }, json=data)
-    
-#     logging.debug("Генерация завершена")
-    
-#     print(resp.json())
-    
-#     if resp.status_code == 200 and 'result' in resp.json():
-#         result = resp.json()['result']["alternatives"][0]["message"]["text"]
-#         h = count_tokens(g[0].replace("[]", " ") + ". " + (g[1] + " "+result).replace("[]", " "))
-#         f1(id, ("user", g[0]), ("assis", g[1] + result + "[]"), ("tokens_gpt", g[2] + h))
-#         if g[3]:
-#             return (1, resp.json())
-#         else:
-#             return (2, resp.json())
-#     else:
-#         if g[3]:
-#             return (4, resp.json())
-#         else:
-#             return (5, True)
-            
-# async def gpt1(message, text):        
-#     g = gpt(message.from_user.id, text) 
-#     if g[0] == 1 or g[0] == 2:
-#         if g[1]['result']["alternatives"][0]["message"]["text"] == "":
-#             await message.answer("Объяснение завершено")
-#             return
-#         await message.answer(g[1]['result']["alternatives"][0]["message"]["text"])
-#         if g[0] == 1:       
-#             await message.answer(str(g[1]))
-#         return g[1]['result']["alternatives"][0]["message"]["text"]
-#     if g[0] == 3:       
-#         await message.answer("Ты потратил все токены")     
-#     if g[0] == 4:               
-#         await message.answer(str(g)) 
-#     if g[0] == 5:
-#         await message.answer("Ошибка")
     
 @rout.message(N.n1, F.text)
 async def gpt2(message:Message,state=FSMContext):
@@ -482,77 +255,9 @@ async def j(message:Message,state=FSMContext):
         return
     await tts1(message, k)
     logging.info("Победа")
-    
-
-# async def job(message):
-#     g = list(f2(message.from_user.id,"user","assis","tokens_gpt", "Отлад"))
-    
-#     if g[2] > 1000:               
-#         return
-    
-#     data = {
-#         "modelUri": f"gpt://b1ghl4q6lijhc0ii8hdf/yandexgpt-lite",
-#         "completionOptions": {
-#             "stream": False,
-#             "temperature": 0.6,
-#             "maxTokens": 30
-#         },
-#         "messages": [{"role": "system", "text": "Извлеки из этого диалога любопытный факт для пользователя"}]
-#     }
-    
-#     g[0] += "Любопытный факт" + "[]"
-    
-#     b = list(zip(g[0].split("[]"), g[1].split("[]")))
-    
-#     if len(b) > 5:
-#         for i in range(len(b) - 5):
-#             b.pop(i)
-    
-#     for r in b:        
-#         if r[0] != "":
-#             data["messages"].append(
-#                 {
-#                     "role": "user",
-#                     "text": r[0]
-#                 }
-#             ) 
-#         if r[1] != "":
-#             data["messages"].append(
-#                 {
-#                     "role": "assistant",
-#                     "text": r[1]
-#                 }
-#             )
-    
-#     logging.info("Генерация")
-
-#     resp = requests.post("https://llm.api.cloud.yandex.net/foundationModels/v1/completion", 
-#                 headers= {
-#         'Authorization': f'Bearer {iam_token}',
-#         'Content-Type': 'application/json'
-#     }, json=data)
-    
-#     print(resp.json())
-    
-#     logging.debug("Генерация завершена")
-    
-#     if resp.status_code == 200 and 'result' in resp.json():
-#         result = resp.json()['result']["alternatives"][0]["message"]["text"]
-#         h = count_tokens(g[0].replace("[]", " ") + ". " + (g[1] + " "+result).replace("[]", " "))
-#         f1(message.from_user.id, ("user", g[0]), ("assis", g[1] + result + "[]"), ("tokens_gpt", g[2] + h))
-#         await message.answer(result + "\n\nТак как больше 1 сессии нету то вести диалог с этим сообщением не нада")
-#     else:
-#         await message.answer("Ошибка")
-#         logging.debug("Генерация завершена")
         
         
-
-if __name__ == "__main__":
-    # logging.info("Бот запущен")
-    # loop = get_event_loop()
-    # task = create_task(main())
-    # loop.run_until_complete(gather(task))
-    
+if __name__ == "__main__": 
     lp = get_event_loop()
     lp.run_until_complete(main())
 
