@@ -11,7 +11,6 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.utils.chat_action import ChatActionSender
-import requests
 from sqlite3 import connect
 from json import load, dump
 from random import choice
@@ -23,7 +22,6 @@ from speechkit import tts1, sst1
 from yandexgpt import gpt1, job
 
 dp = Dispatcher(storage = MemoryStorage())
-
 class N(StatesGroup):
     n = State()
     n1 = State()
@@ -33,7 +31,6 @@ class N(StatesGroup):
     n5 = State()
     n6 = State()
     n7 = State()
-    
 class P(BaseFilter):
     async def __call__(self, message): 
         if str(message.from_user.id) in load(open("us.json", "r"))["Забанан"]:             
@@ -73,7 +70,6 @@ class Right(BaseFilter):
         return False
 @rout.message(Right())
 async def l1(message: Message,bot:Bot):
-    print(3)
     l = load(open("i.json", "r"))
     if message.text == "Всё":
         l["Диалог"].remove(l["Юзеры"][str(message.from_user.id)]["id"])
@@ -85,7 +81,6 @@ async def l1(message: Message,bot:Bot):
         await t.send_message(message.from_user.id,"Диалог завершён")
         return
     await t.send_message(l["Юзеры"][str(message.from_user.id)]["id"],message.text)
-    await t.send_message(l["Юзеры"][l["Юзеры"][str(message.from_user.id)]["id"]]["id"],message.text)
     
 
 @rout.message(Command("start"))
@@ -103,7 +98,7 @@ async def hh(message:Message, apscheduler:AsyncIOScheduler):
 """)
     g = s.execute(f"SELECT user_id FROM us WHERE EXISTS(SELECT user_id FROM us WHERE user_id = {message.from_user.id});").fetchone()
     k = s.execute('''SELECT user_id FROM us''').fetchall()
-    if not g and len(k) >= 5:
+    if not g and len(k) <= 5:
         s.execute("INSERT INTO us (user_id, user, assis, tokens_gpt, tokens_sst, tokens_tts, Отлад) VALUES(?, ?, ?, ?, ?, ?, ?);", (message.from_user.id, "", "", 0, 0, 0, False))
         l = load(open("i.json", "r"))
         l["Юзеры"][str(message.from_user.id)] = {"id":0}
@@ -121,7 +116,7 @@ async def hh(message:Message, apscheduler:AsyncIOScheduler):
     ser.close()
     await message.answer("Привет") 
     
-
+    
 @rout.message(Command("debug"))
 async def l(message:Message):
     async with ChatActionSender(bot=t,chat_id=message.chat.id):
@@ -138,13 +133,6 @@ async def p(message:Message,state=FSMContext):
 async def i(message:Message,state=FSMContext):
     g = f2(message.from_user.id, "user_id", "tokens_gpt", "tokens_sst", "tokens_tts", "Отлад", "user", "assis")
     if message.text == "Новая" or message.text == "Старая":          
-        if g[1] > 1000:
-            await message.answer("Ты потратил все токены")
-            return
-        elif g[1] > 500:
-            await message.answer("Ты потратил больше 500 токенов из 1000")
-        elif g[1] > 800:
-            await message.answer("Ты потратил больше 800 токенов из 1000")
         if message.text == "Новая":
             f1(message.from_user.id, ("user", ""), ("assis", ""))
             await state.set_state(N.n5)
@@ -157,15 +145,9 @@ async def i(message:Message,state=FSMContext):
         await message.answer("Выбери", reply_markup=mark)
         return
     elif message.text == "sst":
-        if g[2] > 12:      
-            await message.answer("Ты потратил все блоки")
-            return
         await state.set_state(N.n3)
         await message.answer("Говори")
     elif message.text == "tts":
-        if g[3] > 1000:
-            await message.answer("Ты потратил все символы")
-            return
         await state.set_state(N.n2)
         await message.answer("Вводи")
     elif message.text == "Отлад":
@@ -185,13 +167,14 @@ async def i(message:Message,state=FSMContext):
             await message.answer("История не начата")
     elif message.text == "Диалог": 
         l = load(open("i.json", "r"))
-        # while u == message.from_user.id:      Проверка на самого себя
-        #     u = choice(list(l["Юзеры"].keys()))
-        u = choice(list(l["Юзеры"].keys()))
         if message.from_user.id not in l["Диалог"]:
+            u = ""
+            while u == str(message.from_user.id) or u == "":      #Проверка на самого себя
+                u = choice(list(l["Юзеры"].keys()))
+            #u = choice(list(l["Юзеры"].keys()))
             l["Диалог"].append(message.from_user.id)
             l["Диалог"].append(int(u))
-            l["Юзеры"][str(message.from_user.id)]["id"] = u
+            l["Юзеры"][str(message.from_user.id)]["id"] = int(u)
             l["Юзеры"][u]["id"] = message.from_user.id
         dump(l, open("i.json", "w"))
         await state.clear()

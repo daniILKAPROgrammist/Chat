@@ -1,10 +1,10 @@
-from config import iam_token, folder_id, t
+from config import iam_token, folder_id,t,logging
 from aiogram.utils.chat_action import ChatActionSender
 from aiogram.types import Message, FSInputFile
 import requests
 from database import f1, f2
 from math import ceil
-from config import logging
+
 
 def tts(id, text):
     g = f2(id,"tokens_tts", "Отлад")
@@ -42,18 +42,18 @@ async def tts1(message:Message, text):
         async with ChatActionSender(bot=t,chat_id=message.chat.id):
             await message.answer_audio(FSInputFile("output.ogg", "ГыГ"), caption = "ГыГ")
             logging.info("3")
-    if t[0] == 3:
+    elif t[0] == 3:
         await message.answer("Нету символов")
-    if t[0] == 4:
+    elif t[0] == 4:
         await message.answer(str(t))
-    if t[0] == 5:
+    elif t[0] == 5:
         await message.answer("Ошибка")
         
         
 async def sst(id, voice):
     g = f2(id,"tokens_sst", "Отлад")
     
-    if g[0] > 10:
+    if g[0] > 13:
         return (3, True)
     
     await t.download(voice, "ov.ogg")
@@ -102,10 +102,10 @@ async def sst1(message):
                 await message.answer(s[1]["result"])
                 logging.info("1")
             return s[1]["result"]
-    if s[0] == 3:
+    elif s[0] == 3:
         await message.answer("Нету блоков")
-    if s[0] == 4:
+    elif s[0] == 4:
         await message.answer(str(sst))
-    if s[0] == 5:
+    elif s[0] == 5:
         await message.answer("Ошибка")
     return False

@@ -1,13 +1,14 @@
-2024-05-01 13:58:48,912 - asyncio - DEBUG - Using selector: EpollSelector
-2024-05-01 13:58:49,224 - tzlocal - DEBUG - /etc/timezone found, contents:
+2024-05-08 14:08:42,821 - asyncio - DEBUG - Using selector: EpollSelector
+2024-05-08 14:08:43,053 - tzlocal - DEBUG - /etc/timezone found, contents:
  Asia/Yekaterinburg
 
-2024-05-01 13:58:49,225 - tzlocal - DEBUG - /etc/localtime found
-2024-05-01 13:58:49,237 - tzlocal - DEBUG - 2 found:
+2024-05-08 14:08:43,054 - tzlocal - DEBUG - /etc/localtime found
+2024-05-08 14:08:43,056 - tzlocal - DEBUG - 2 found:
  {'/etc/timezone': 'Asia/Yekaterinburg', '/etc/localtime is a symlink to': 'Asia/Yekaterinburg'}
-2024-05-01 13:58:49,240 - apscheduler.scheduler - INFO - Scheduler started
-2024-05-01 13:58:49,241 - aiogram.dispatcher - INFO - Start polling
-2024-05-01 13:58:49,242 - apscheduler.scheduler - DEBUG - Looking for jobs to run
-2024-05-01 13:58:49,242 - apscheduler.scheduler - DEBUG - No jobs; waiting until a job is added
-2024-05-01 13:58:49,337 - aiogram.dispatcher - INFO - Run polling for bot @Dermishche_bot id=6585400874 - 'Нейро'
-2024-05-01 13:59:06,217 - aiogram.event - INFO - Update id=101427673 is handled. Duration 366 ms by bot id=6585400874
+2024-05-08 14:08:43,058 - apscheduler.scheduler - INFO - Scheduler started
+2024-05-08 14:08:43,059 - aiogram.dispatcher - INFO - Start polling
+2024-05-08 14:08:43,059 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2024-05-08 14:08:43,060 - apscheduler.scheduler - DEBUG - No jobs; waiting until a job is added
+2024-05-08 14:08:43,151 - aiogram.dispatcher - INFO - Run polling for bot @dermo9_bot id=6877530301 - 'dermo_bot'
+2024-05-08 14:08:47,389 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2024-05-08 14:08:47,389 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 6877530301)

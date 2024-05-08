@@ -3,6 +3,7 @@ import requests
 from database import f1, f2
 from config import logging
 
+
 def count_tokens(g):
     # Подсчитывает количество токенов в тексте
     headers = { # заголовок запроса, в котором передаем IAM-токен
@@ -96,15 +97,14 @@ async def gpt1(message, text):
         if g[0] == 1:       
             await message.answer(str(g[1]))
         return g[1]['result']["alternatives"][0]["message"]["text"]
-    if g[0] == 3:       
+    elif g[0] == 3:       
         await message.answer("Ты потратил все токены")     
-    if g[0] == 4:               
+    elif g[0] == 4:               
         await message.answer(str(g)) 
-    if g[0] == 5:
+    elif g[0] == 5:
         await message.answer("Ошибка")
     return False
         
-
 async def job(message):
     g = list(f2(message.from_user.id,"user","assis","tokens_gpt", "Отлад"))
     
